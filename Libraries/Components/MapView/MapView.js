@@ -54,8 +54,7 @@ export type AnnotationDragState = $Enum<{
 
 /**
  * **IMPORTANT: This component is now DEPRECATED and will be removed
- * in January 2017 (React Native version 0.42). This component only supports
- * iOS.**
+ * in React Native version 0.42. This component only supports iOS.**
  *
  * **Please use
  * [react-native-maps](https://github.com/airbnb/react-native-maps) by Airbnb
@@ -91,7 +90,7 @@ const MapView = React.createClass({
       'MapView is now deprecated and will be removed from React Native in version 0.42. ' +
       'Please use the react-native-maps module which is more feature complete ' +
       'and works on Android too: https://github.com/airbnb/react-native-maps\n' +
-      'It is actively maintained and widely used.\n\n' +
+      'It is actively maintained and used extensively.\n\n' +
       'Once MapView is removed from React Native in v0.42, we will release the ' +
       'code as deprecated-react-native-ios-mapview. You will be able to ' +
       'continue using that and migrate to react-native-maps your own pace later.\n\n' +
@@ -135,6 +134,13 @@ const MapView = React.createClass({
      * Default value is `true`.
      */
     showsCompass: React.PropTypes.bool,
+
+    /**
+     * If `true` the map will show the callouts for all annotations without
+     * the user having to click on the annotation.
+     * Default value is `false`.
+     */
+    showsAnnotationCallouts: React.PropTypes.bool,
 
     /**
      * If `false` the user won't be able to pinch/zoom the map.
