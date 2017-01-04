@@ -276,6 +276,7 @@ public class DevServerHelper {
 
   public String getDevServerBundleURL(final String jsModulePath) {
     return createBundleURL(
+      getDebugServerProtocol(),
       getDebugServerHost(),
       jsModulePath,
       getDevMode(),
@@ -285,15 +286,8 @@ public class DevServerHelper {
 
   public void downloadBundleFromURL(
       final BundleDownloadCallback callback,
-      final String jsModulePath,
-      final File outputFile) {
-    final String bundleURL = createBundleURL(
-        getDebugServerProtocol(),
-        getDebugServerHost(),
-        jsModulePath,
-        getDevMode(),
-        getHMR(),
-        getJSMinifyMode());
+      final File outputFile,
+      final String bundleURL) {
     final Request request = new Request.Builder()
         .url(bundleURL)
         .build();
