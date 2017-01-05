@@ -187,21 +187,22 @@ public class DevServerHelper {
   }
 
   public String getWebsocketProxyURL() {
-    return String.format(Locale.US, WEBSOCKET_PROXY_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, WEBSOCKET_PROXY_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   private String getPackagerConnectionURL() {
-    return String.format(Locale.US, PACKAGER_CONNECTION_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, PACKAGER_CONNECTION_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   public String getHeapCaptureUploadUrl() {
-    return String.format(Locale.US, HEAP_CAPTURE_UPLOAD_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, HEAP_CAPTURE_UPLOAD_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   public String getInspectorDeviceUrl() {
     return String.format(
         Locale.US,
         INSPECTOR_DEVICE_URL_FORMAT,
+        getDebugServerProtocol(),
         getDebugServerHost(),
         AndroidInfoHelpers.getFriendlyDeviceName());
   }
@@ -476,11 +477,11 @@ public class DevServerHelper {
   }
 
   private String createOnChangeEndpointUrl() {
-    return String.format(Locale.US, ONCHANGE_ENDPOINT_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, ONCHANGE_ENDPOINT_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   private String createLaunchJSDevtoolsCommandUrl() {
-    return String.format(Locale.US, LAUNCH_JS_DEVTOOLS_COMMAND_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, LAUNCH_JS_DEVTOOLS_COMMAND_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   public void launchJSDevtools() {
