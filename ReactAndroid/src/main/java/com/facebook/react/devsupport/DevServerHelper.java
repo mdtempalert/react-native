@@ -429,11 +429,11 @@ public class DevServerHelper {
   }
 
   private String createOnChangeEndpointUrl() {
-    return String.format(Locale.US, ONCHANGE_ENDPOINT_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, ONCHANGE_ENDPOINT_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   private String createLaunchJSDevtoolsCommandUrl() {
-    return String.format(Locale.US, LAUNCH_JS_DEVTOOLS_COMMAND_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, LAUNCH_JS_DEVTOOLS_COMMAND_URL_FORMAT, getDebugServerProtocol(), getDebugServerHost());
   }
 
   public void launchJSDevtools() {
