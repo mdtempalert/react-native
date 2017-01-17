@@ -5,6 +5,8 @@ def config = project.hasProperty("react") ? project.react : [];
 def bundleAssetName = config.bundleAssetName ?: "index.android.bundle"
 def entryFile = config.entryFile ?: "index.android.js"
 
+def shouldBundle = false
+
 // because elvis operator
 def elvisFile(thing) {
     return thing ? file(thing) : null;
@@ -55,50 +57,52 @@ gradle.projectsEvaluated {
             def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
             def extraPackagerArgs = config.extraPackagerArgs ?: []
 
-            def currentBundleTask = tasks.create(
-                    name: bundleJsAndAssetsTaskName,
-                    type: Exec) {
-                group = "react"
-                description = "bundle JS and assets for ${targetName}."
+            if (shouldBundle) {
+              def currentBundleTask = tasks.create(
+                      name: bundleJsAndAssetsTaskName,
+                      type: Exec) {
+                  group = "react"
+                  description = "bundle JS and assets for ${targetName}."
 
-                // Create dirs if they are not there (e.g. the "clean" task just ran)
-                doFirst {
-                    jsBundleDir.mkdirs()
-                    resourcesDir.mkdirs()
-                }
+                  // Create dirs if they are not there (e.g. the "clean" task just ran)
+                  doFirst {
+                      jsBundleDir.mkdirs()
+                      resourcesDir.mkdirs()
+                  }
 
-                // Set up inputs and outputs so gradle can cache the result
-                inputs.files fileTree(dir: reactRoot, excludes: inputExcludes)
-                outputs.dir jsBundleDir
-                outputs.dir resourcesDir
+                  // Set up inputs and outputs so gradle can cache the result
+                  inputs.files fileTree(dir: reactRoot, excludes: inputExcludes)
+                  outputs.dir jsBundleDir
+                  outputs.dir resourcesDir
 
-                // Set up the call to the react-native cli
-                workingDir reactRoot
+                  // Set up the call to the react-native cli
+                  workingDir reactRoot
 
-                // Set up dev mode
-                def devEnabled = !targetName.toLowerCase().contains("release")
-                if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                    commandLine("cmd", "/c", *nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
-                            "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
-                } else {
-                    commandLine(*nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
-                            "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
-                }
+                  // Set up dev mode
+                  def devEnabled = !targetName.toLowerCase().contains("release")
+                  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                      commandLine("cmd", "/c", *nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
+                              "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
+                  } else {
+                      commandLine(*nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
+                              "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
+                  }
 
-                enabled config."bundleIn${targetName}" ||
-                    config."bundleIn${buildTypeName.capitalize()}" ?:
-                            targetName.toLowerCase().contains("release")
-            }
+                  enabled config."bundleIn${targetName}" ||
+                      config."bundleIn${buildTypeName.capitalize()}" ?:
+                              targetName.toLowerCase().contains("release")
+              }
 
-            // Hook bundle${productFlavor}${buildType}JsAndAssets into the android build process
-            currentBundleTask.dependsOn("merge${targetName}Resources")
-            currentBundleTask.dependsOn("merge${targetName}Assets")
+              // Hook bundle${productFlavor}${buildType}JsAndAssets into the android build process
+              currentBundleTask.dependsOn("merge${targetName}Resources")
+              currentBundleTask.dependsOn("merge${targetName}Assets")
 
-            runBefore("process${flavorNameCapitalized}Armeabi-v7a${buildNameCapitalized}Resources", currentBundleTask)
-            runBefore("process${flavorNameCapitalized}X86${buildNameCapitalized}Resources", currentBundleTask)
-            runBefore("processUniversal${targetName}Resources", currentBundleTask)
-            runBefore("process${targetName}Resources", currentBundleTask)
-            runBefore("dataBindingProcessLayouts${targetName}", currentBundleTask)
+              runBefore("process${flavorNameCapitalized}Armeabi-v7a${buildNameCapitalized}Resources", currentBundleTask)
+              runBefore("process${flavorNameCapitalized}X86${buildNameCapitalized}Resources", currentBundleTask)
+              runBefore("processUniversal${targetName}Resources", currentBundleTask)
+              runBefore("process${targetName}Resources", currentBundleTask)
+              runBefore("dataBindingProcessLayouts${targetName}", currentBundleTask)
+          }
         }
     }
 }
