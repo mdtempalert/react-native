@@ -141,6 +141,13 @@ public abstract class ReactNativeHost {
   public abstract boolean getUseDeveloperSupport();
 
   /**
+   *
+   * Returns whether we show the options dialog or not. Used for locking down builds that use dev support
+   * but should not be configurable.
+   */
+  protected abstract boolean getOptionsDialogEnabled();
+
+  /**
    * Returns a list of {@link ReactPackage} used by the app.
    * You'll most likely want to return at least the {@code MainReactPackage}.
    * If your app uses additional views or modules besides the default ones,
