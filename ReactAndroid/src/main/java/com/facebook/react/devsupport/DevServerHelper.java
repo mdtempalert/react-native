@@ -63,14 +63,9 @@ public class DevServerHelper {
       "%s://%s/onchange";
   private static final String WEBSOCKET_PROXY_URL_FORMAT = "ws://%s/debugger-proxy?role=client";
   private static final String PACKAGER_CONNECTION_URL_FORMAT = "ws://%s/message?role=shell";
-<<<<<<< HEAD
   private static final String PACKAGER_STATUS_URL_FORMAT = "%s://%s/status";
   private static final String HEAP_CAPTURE_UPLOAD_URL_FORMAT = "%s://%s/jscheapcaptureupload";
-=======
-  private static final String PACKAGER_STATUS_URL_FORMAT = "http://%s/status";
-  private static final String HEAP_CAPTURE_UPLOAD_URL_FORMAT = "http://%s/jscheapcaptureupload";
-  private static final String INSPECTOR_DEVICE_URL_FORMAT = "http://%s/inspector/device?name=%s";
->>>>>>> 0.42-stable-tempalert
+  private static final String INSPECTOR_DEVICE_URL_FORMAT = "%s://%s/inspector/device?name=%s";
 
   private static final String PACKAGER_OK_STATUS = "packager-status:running";
 
@@ -216,6 +211,7 @@ public class DevServerHelper {
     return String.format(
         Locale.US,
         INSPECTOR_DEVICE_URL_FORMAT,
+        getDebugServerProtocol(),
         getDebugServerHost(),
         AndroidInfoHelpers.getFriendlyDeviceName());
   }
@@ -290,6 +286,7 @@ public class DevServerHelper {
 
   public String getDevServerBundleURL(final String jsModulePath) {
     return createBundleURL(
+      getDebugServerProtocol(),
       getDebugServerHost(),
       jsModulePath,
       getDevMode(),
@@ -299,20 +296,9 @@ public class DevServerHelper {
 
   public void downloadBundleFromURL(
       final BundleDownloadCallback callback,
-<<<<<<< HEAD
-      final String jsModulePath,
-      final File outputFile) {
-    final String bundleURL = createBundleURL(
-        getDebugServerProtocol(),
-        getDebugServerHost(),
-        jsModulePath,
-        getDevMode(),
-        getHMR(),
-        getJSMinifyMode());
-=======
       final File outputFile,
       final String bundleURL) {
->>>>>>> 0.42-stable-tempalert
+
     final Request request = new Request.Builder()
         .url(bundleURL)
         .build();
