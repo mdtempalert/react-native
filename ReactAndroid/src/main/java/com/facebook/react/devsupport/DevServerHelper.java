@@ -61,8 +61,8 @@ public class DevServerHelper {
       "%s://%s/launch-js-devtools";
   private static final String ONCHANGE_ENDPOINT_URL_FORMAT =
       "%s://%s/onchange";
-  private static final String WEBSOCKET_PROXY_URL_FORMAT = "ws://%s/debugger-proxy?role=client";
-  private static final String PACKAGER_CONNECTION_URL_FORMAT = "ws://%s/message?role=shell";
+  private static final String WEBSOCKET_PROXY_URL_FORMAT = "%s://%s/debugger-proxy?role=client";
+  private static final String PACKAGER_CONNECTION_URL_FORMAT = "%s://%s/message?role=shell";
   private static final String PACKAGER_STATUS_URL_FORMAT = "%s://%s/status";
   private static final String HEAP_CAPTURE_UPLOAD_URL_FORMAT = "%s://%s/jscheapcaptureupload";
   private static final String INSPECTOR_DEVICE_URL_FORMAT = "%s://%s/inspector/device?name=%s";
@@ -196,11 +196,11 @@ public class DevServerHelper {
   }
 
   public String getWebsocketProxyURL() {
-    return String.format(Locale.US, WEBSOCKET_PROXY_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, WEBSOCKET_PROXY_URL_FORMAT, getDebugServerWebServicesProtocol(), getDebugServerHost());
   }
 
   private String getPackagerConnectionURL() {
-    return String.format(Locale.US, PACKAGER_CONNECTION_URL_FORMAT, getDebugServerHost());
+    return String.format(Locale.US, PACKAGER_CONNECTION_URL_FORMAT, getDebugServerWebServicesProtocol(), getDebugServerHost());
   }
 
   public String getHeapCaptureUploadUrl() {
@@ -242,6 +242,23 @@ public class DevServerHelper {
    */
   private boolean getHMR() {
     return mSettings.isHotModuleReplacementEnabled();
+  }
+
+
+  /**
+   * Connection protocol for web services
+   * @return
+   */
+  private String getDebugServerWebServicesProtocol() {
+    return mSettings.useTls() ? "wss" : "ws";
+  }
+
+  /**
+   * Connection protocol to debug server
+   * @return
+     */
+  private String getDebugServerProtocol() {
+    return mSettings.useTls() ? "https" : "http";
   }
 
   /**
