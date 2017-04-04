@@ -63,21 +63,12 @@ public class DevServerHelper {
   private static final String LAUNCH_JS_DEVTOOLS_COMMAND_URL_FORMAT =
       "%s://%s/launch-js-devtools";
   private static final String ONCHANGE_ENDPOINT_URL_FORMAT =
-<<<<<<< HEAD
       "%s://%s/onchange";
   private static final String WEBSOCKET_PROXY_URL_FORMAT = "%s://%s/debugger-proxy?role=client";
   private static final String PACKAGER_CONNECTION_URL_FORMAT = "%s://%s/message?role=shell";
   private static final String PACKAGER_STATUS_URL_FORMAT = "%s://%s/status";
   private static final String HEAP_CAPTURE_UPLOAD_URL_FORMAT = "%s://%s/jscheapcaptureupload";
   private static final String INSPECTOR_DEVICE_URL_FORMAT = "%s://%s/inspector/device?name=%s";
-=======
-      "http://%s/onchange";
-  private static final String WEBSOCKET_PROXY_URL_FORMAT = "ws://%s/debugger-proxy?role=client";
-  private static final String PACKAGER_CONNECTION_URL_FORMAT = "ws://%s/message?role=android-rn-devserverhelper";
-  private static final String PACKAGER_STATUS_URL_FORMAT = "http://%s/status";
-  private static final String HEAP_CAPTURE_UPLOAD_URL_FORMAT = "http://%s/jscheapcaptureupload";
-  private static final String INSPECTOR_DEVICE_URL_FORMAT = "http://%s/inspector/device?name=%s";
->>>>>>> 0.43-tempalert
 
   private static final String PACKAGER_OK_STATUS = "packager-status:running";
 
@@ -276,15 +267,7 @@ public class DevServerHelper {
   private String getDebugServerProtocol() {
     return mSettings.useTls() ? "https" : "http";
   }
-
-  /**
-   *
-   * @return
-     */
-  private String getDebugServerProtocol() {
-    return mSettings.useTls() ? "https" : "http";
-  }
-
+  
   /**
    * @return the host to use when connecting to the bundle server.
    */
