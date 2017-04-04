@@ -195,11 +195,11 @@ Click "Next" to install all of these components, then [configure VM acceleration
 
 #### 3. Install the Android 6.0 (Marshmallow) SDK
 
-Android Studio installs the most recent Android SDK by default. React Native, however, requires the `Android 6.0 (Marshmallow)` SDK. To install it, launch the SDK Manager, click on "Configure" in the "Welcome to Android Studio" screen.
+Android Studio installs the most recent Android SDK by default. React Native, however, requires the `Android 6.0 (Marshmallow)` SDK. To install it, launch the SDK Manager, click on "Configure" > "SDK Manager" in the "Welcome to Android Studio" screen.
 
 > The SDK Manager can also be found within the Android Studio "Preferences" menu, under **Appearance & Behavior** → **System Settings** → **Android SDK**.
 
-Select "SDK Platforms" from within the SDK Manager, then check the box next to "Show Package Details". Look for and expand the `Android 6.0 (Marshmallow)` entry, then make sure the following items are all checked:
+Select the "SDK Platforms" tab from within the SDK Manager, then check the box next to "Show Package Details" in the bottom right corner. Look for and expand the `Android 6.0 (Marshmallow)` entry, then make sure the following items are all checked:
 
 - `Google APIs`
 - `Android SDK Platform 23`

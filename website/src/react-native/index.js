@@ -8,18 +8,17 @@
  */
 'use strict';
 
-const Hero = require('Hero');
-const Metadata = require('Metadata');
-const Prism = require('Prism');
-const React = require('React');
-const ShowcaseAppIcon = require('ShowcaseAppIcon');
-const Site = require('Site');
+var Hero = require('Hero');
+var Prism = require('Prism');
+var React = require('React');
+var Site = require('Site');
+var Metadata = require('Metadata');
 
 const pinnedApps = Metadata.showcaseApps.filter(app => {
   return app.pinned;
 });
 
-const AppList = React.createClass({
+var AppList = React.createClass({
   render: function() {
     return (
       <div>
@@ -31,16 +30,29 @@ const AppList = React.createClass({
   _renderApp: function(app, i) {
     return (
       <div className="showcase" key={i}>
-        <ShowcaseAppIcon
-          iconUri={app.icon}
-          name={app.name}
-          linkUri={app.infoLink} />
+        {this._renderIcon(app)}
       </div>
+    );
+  },
+
+  _renderIcon: function(app) {
+    return (
+      <a href={app.infoLink}>
+        <img src={app.icon} alt={app.name} />
+      </a>
+    );
+  },
+
+  _renderTitle: function(app) {
+    return (
+      <a href={app.infoLink}>
+        <h3>{app.name}</h3>
+      </a>
     );
   },
 });
 
-const index = React.createClass({
+var index = React.createClass({
   render: function() {
     return (
       <Site>

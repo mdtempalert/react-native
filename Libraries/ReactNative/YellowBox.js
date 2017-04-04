@@ -240,7 +240,7 @@ const WarningInspector = ({
         <Text style={styles.inspectorCountText}>{countSentence}</Text>
         <TouchableHighlight onPress={toggleStacktrace} underlayColor="transparent">
           <Text style={styles.inspectorButtonText}>
-            {stacktraceVisible ? '▼' : '▶' } Stacktrace
+            {stacktraceVisible ? '\u{25BC}' : '\u{25B6}'} Stacktrace
           </Text>
         </TouchableHighlight>
       </View>
@@ -395,27 +395,21 @@ const rowGutter = 1;
 const rowHeight = 46;
 
 // For unknown reasons, setting elevation: Number.MAX_VALUE causes remote debugging to
-// hang on iOS (some sort of overflow maybe). Setting it to Number.MAX_SAFE_INTEGER fixes
-// the iOS issue, but since elevation is an Android-only style property we should only
-// use it on Android.
+// hang on iOS (some sort of overflow maybe). Setting it to Number.MAX_SAFE_INTEGER fixes the iOS issue, but since
+// elevation is an android-only style property we might as well remove it altogether for iOS.
 // See: https://github.com/facebook/react-native/issues/12223
 const elevation = Platform.OS === 'android' ? Number.MAX_SAFE_INTEGER : undefined;
 
 var styles = StyleSheet.create({
   fullScreen: {
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    elevation: elevation,
+    height: '100%',
+    elevation: elevation
   },
   inspector: {
     backgroundColor: backgroundColor(0.95),
-    flex: 1,
+    height: '100%',
     paddingTop: 5,
-    elevation: elevation,
+    elevation:elevation
   },
   inspectorButtons: {
     flexDirection: 'row',
@@ -463,12 +457,10 @@ var styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    elevation: elevation,
+    elevation: elevation
   },
   listRow: {
-    position: 'relative',
     backgroundColor: backgroundColor(0.95),
-    flex: 1,
     height: rowHeight,
     marginTop: rowGutter,
   },

@@ -23,6 +23,11 @@ const ViewStylePropTypes = require('ViewStylePropTypes');
 
 const invariant = require('fbjs/lib/invariant');
 
+const {
+  AccessibilityComponentTypes,
+  AccessibilityTraits,
+} = require('ViewAccessibility');
+
 var TVViewPropTypes = {};
 if (Platform.isTVOS) {
   TVViewPropTypes = require('TVViewPropTypes');
@@ -34,39 +39,12 @@ const PropTypes = React.PropTypes;
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
-const AccessibilityTraits = [
-  'none',
-  'button',
-  'link',
-  'header',
-  'search',
-  'image',
-  'selected',
-  'plays',
-  'key',
-  'text',
-  'summary',
-  'disabled',
-  'frequentUpdates',
-  'startsMedia',
-  'adjustable',
-  'allowsDirectInteraction',
-  'pageTurn',
-];
-
-const AccessibilityComponentType = [
-  'none',
-  'button',
-  'radiobutton_checked',
-  'radiobutton_unchecked',
-];
-
-const forceTouchAvailable = (NativeModules.IOSConstants &&
-  NativeModules.IOSConstants.forceTouchAvailable) || false;
+const forceTouchAvailable = (NativeModules.PlatformConstants &&
+  NativeModules.PlatformConstants.forceTouchAvailable) || false;
 
 const statics = {
   AccessibilityTraits,
-  AccessibilityComponentType,
+  AccessibilityComponentType: AccessibilityComponentTypes,
   /**
    * Is 3D Touch / Force Touch available (i.e. will touch events include `force`)
    * @platform ios
@@ -169,7 +147,7 @@ const View = React.createClass({
      *
      * @platform android
      */
-    accessibilityComponentType: PropTypes.oneOf(AccessibilityComponentType),
+    accessibilityComponentType: PropTypes.oneOf(AccessibilityComponentTypes),
 
     /**
      * Indicates to accessibility services whether the user should be notified
@@ -252,6 +230,18 @@ const View = React.createClass({
       PropTypes.oneOf(AccessibilityTraits),
       PropTypes.arrayOf(PropTypes.oneOf(AccessibilityTraits)),
     ]),
+
+    /**
+     * A value indicating whether VoiceOver should ignore the elements
+     * within views that are siblings of the receiver.
+     * Default is `false`.
+     *
+     * See the [Accessibility guide](docs/accessibility.html#accessibilitytraits-ios)
+     * for more information.
+     *
+     * @platform ios
+     */
+    accessibilityViewIsModal: PropTypes.bool,
 
     /**
      * When `accessible` is true, the system will try to invoke this function
