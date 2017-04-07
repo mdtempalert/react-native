@@ -70,7 +70,7 @@ type Config = {
 }
 
 function configureNext(config: Config, onAnimationDidEnd?: Function) {
-  if (__DEV__) {
+  if (__DEV__ && 0 /*MTD: disabled due to bug*/) {
     configChecker({config}, 'config', 'LayoutAnimation.configureNext');
   }
   UIManager.configureNextLayoutAnimation(
