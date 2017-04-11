@@ -75,13 +75,8 @@ function checkConfig(config: Config, location: string, name: string) {
 }
 
 function configureNext(config: Config, onAnimationDidEnd?: Function) {
-<<<<<<< HEAD
   if (__DEV__ && 0 /*MTD: disabled due to bug*/) {
     configChecker({config}, 'config', 'LayoutAnimation.configureNext');
-=======
-  if (__DEV__) {
-    checkConfig(config, 'config', 'LayoutAnimation.configureNext');
->>>>>>> 0.43-stable
   }
   UIManager.configureNextLayoutAnimation(
     config, onAnimationDidEnd || function() {}, function() { /* unused */ }
